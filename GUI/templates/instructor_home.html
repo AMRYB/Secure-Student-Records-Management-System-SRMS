@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Instructor Dashboard - SRMS</title>
+      <link rel="icon" href="/static/img/11.png" type="image/png" />
+      <link rel="stylesheet" href="/static/css/in.css" /></head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div><div class="title">SRMS</div><div class="sub">Instructor Portal</div></div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="/instructor">Dashboard</a>
+        <a href="/instructor/grades">Grades</a>
+        <a href="/instructor/attendance">Attendance</a>
+        <a href="/instructor/student-profile">Student Profile</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="who">Logged in as Instructor</div>
+        <div class="hint">Manage grades & attendance</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Instructor Dashboard</h1>
+          <p>Insert grades, publish results, and manage attendance.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-4"><div class="stat green"><div class="label">Role</div><div class="value">Instructor</div></div></div>
+        <div class="span-4"><div class="stat blue"><div class="label">Clearance</div><div class="value">3</div></div></div>
+        <div class="span-4"><div class="stat orange"><div class="label">Actions</div><div class="value">Manage</div></div></div>
+
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>Quick Actions</h2>
+              <p>Go directly to management screens</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="grid">
+              <div class="span-4"><a class="btn btn-dark" href="/instructor/grades">Manage Grades</a></div>
+              <div class="span-4"><a class="btn btn-dark" href="/instructor/attendance">Manage Attendance</a></div>
+              <div class="span-4"><a class="btn btn-dark" href="/instructor/student-profile">Find Student</a></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/instructor_common.js"></script>
+</body>
+</html>

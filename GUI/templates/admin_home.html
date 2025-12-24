@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Dashboard - SRMS</title>
+  <script defer src="{{ url_for('static', filename='js/admin.js') }}"></script>
+  <style>  
+
+    /*
+  File: static/css/srms-ui.css
+  Description: Unified Design for SRMS (Admin, Instructor, TA, Student)
+  Theme: Professional Dashboard (Dark Sidebar, Light Main)
+*/
+
+:root {
+  /* Color Palette */
+  --primary: #143d87;       /* Deep Blue */
+  --primary-dark: #0b2350;  /* Darker Blue */
+  --accent-green: #94c457;  /* Fresh Green */
+  --accent-orange: #d17640; /* Muted Orange */
+  --accent-blue: #68abe0;   /* Light Blue */
+  --danger: #e74c3c;        /* Red for errors/secrets */
+  --success: #27ae60;       /* Green for success */
+  
+  /* Layout Colors */
+  --bg-sidebar: #0b2350;
+  --bg-main: #f0f4f8;
+  --surface: #ffffff;
+  --border-color: #e2e8f0;
+  
+  /* Typography */
+  --text-main: #333333;
+  --text-light: #666666;
+  
+  /* Dimensions */
+  --sidebar-width: 260px;
+  --radius: 10px;
+  --transition: all 0.3s ease;
+}
+
+/* --- Reset & Base --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body.srms-ui {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  height: 100vh;
+  overflow: hidden; /* App-like feel */
+}
+
+/* --- Layout Structure --- */
+.layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.brand {
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.brand img { width: 35px; height: auto; }
+.brand .title { font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
+.brand .sub { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Navigation Area */
+.nav {
+  flex: 1;
+  padding: 20px 10px;
+  overflow-y: auto;
+}
+
+/* Sidebar Buttons (Tabs) & Links */
+.navBtn, .nav a {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 5px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: var(--transition);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navBtn:hover, .nav a:hover {
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  padding-left: 20px; /* Slight slide effect */
+}
+
+.navBtn.active, .nav a.active {
+  background-color: var(--accent-blue);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(104, 171, 224, 0.4);
+}
+
+.sidebar-footer {
+  padding: 20px;
+  background-color: rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.who { font-weight: 600; font-size: 0.9rem; }
+.hint { font-size: 0.75rem; opacity: 0.6; margin-top: 4px; }
+
+/* --- Main Content Area --- */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Topbar */
+.topbar {
+  background-color: var(--surface);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+.topbar h1 { font-size: 1.4rem; color: var(--primary); margin-bottom: 4px; font-weight: 700; }
+.topbar p { color: var(--text-light); font-size: 0.9rem; }
+
+.topbar-actions { display: flex; gap: 10px; }
+
+/* --- Grid System --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  padding: 30px;
+}
+.span-12 { grid-column: span 12; }
+.span-6  { grid-column: span 6; }
+.span-4  { grid-column: span 4; }
+
+/* --- Stats Boxes --- */
+.stat {
+  background-color: var(--surface);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  border-left: 5px solid transparent;
+}
+.stat.green { border-color: var(--accent-green); }
+.stat.orange { border-color: var(--accent-orange); }
+.stat.blue { border-color: var(--accent-blue); }
+
+.stat .label { font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 5px; }
+.stat .value { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+
+/* --- Cards --- */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  border: 1px solid var(--border-color);
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.card-head {
+  padding: 15px 25px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #fafbfc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.card-head h2 { font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 2px; }
+.card-head p { font-size: 0.85rem; color: var(--text-light); }
+
+.card-body { padding: 25px; }
+
+/* Tools inside card header */
+.tools { display: flex; gap: 10px; align-items: center; }
+
+/* --- Forms & Inputs --- */
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.field { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 5px; }
+.field.full { flex: 100%; }
+
+label { font-weight: 600; font-size: 0.9rem; color: var(--primary-dark); }
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  width: 100%;
+  font-family: inherit;
+  background-color: #fff;
+}
+.input:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(104, 171, 224, 0.2);
+}
+.input:disabled { background-color: #f3f4f6; cursor: not-allowed; }
+
+/* --- Buttons --- */
+.btn {
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-primary { background-color: var(--primary); color: white; }
+.btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-secondary { background-color: white; border: 1px solid #d1d5db; color: var(--text-main); }
+.btn-secondary:hover { background-color: #f9fafb; border-color: #9ca3af; }
+
+.btn-dark { background-color: var(--primary-dark); color: white; }
+.btn-dark:hover { background-color: black; }
+
+/* Special Buttons */
+#logoutBtn { background-color: var(--danger); color: white; border: none; }
+#logoutBtn:hover { background-color: #c0392b; }
+
+/* --- Tables --- */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+table { width: 100%; border-collapse: collapse; min-width: 650px; }
+thead { background-color: #f8f9fa; border-bottom: 2px solid var(--border-color); }
+th { text-align: left; padding: 14px 16px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-light); font-weight: 700; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; color: var(--text-main); }
+tr:last-child td { border-bottom: none; }
+tr:hover { background-color: #f1f7fc; }
+
+/* --- Utility / Sections --- */
+.hidden { display: none !important; }
+
+/* Messages */
+.msg { margin-top: 5px; font-size: 0.9rem; font-weight: 500; min-height: 1.2em; }
+.msg.error { color: var(--danger); }
+.msg.success { color: var(--success); }
+
+/* --- Admin Specific: Secret Panels --- */
+/* Highlights sensitive sections with a subtle red theme */
+.secretPanel .card {
+  border-color: #fadbd8;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.05);
+}
+.secretPanel .card-head {
+  background-color: #fef9f9;
+  border-bottom-color: #fadbd8;
+}
+.secretPanel .card-head h2 {
+  color: #c0392b; /* Dark Red */
+}
+.secretPanel .card-head h2::after {
+  content: ' (RESTRICTED)';
+  font-size: 0.7rem;
+  background: #fadbd8;
+  color: #c0392b;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* --- Responsive Mobile --- */
+@media (max-width: 900px) {
+  .layout { flex-direction: column; height: auto; overflow: auto; }
+  .sidebar { width: 100%; height: auto; }
+  .nav { display: flex; overflow-x: auto; padding: 10px; white-space: nowrap; }
+  .navBtn { width: auto; margin-right: 10px; margin-bottom: 0; }
+  
+  .span-4, .span-6, .span-12 { grid-column: span 12; }
+  .topbar { flex-direction: column; align-items: flex-start; gap: 15px; }
+  .topbar-actions { width: 100%; justify-content: space-between; }
+  .card-head { flex-direction: column; align-items: flex-start; }
+  .tools { width: 100%; margin-top: 10px; }
+}
+</style>
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+
+<body class="srms-ui">
+  <div class="layout">
+    
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="SRMS">
+        <div>
+          <div class="title">SRMS</div>
+          <div class="sub">Admin Portal</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="navBtn active" data-sec="overview" onclick="showSec('overview', this)">🏠 Overview</button>
+        <button class="navBtn" data-sec="profile" onclick="showSec('profile', this)">👤 My Profile</button>
+        <button class="navBtn" data-sec="grades" onclick="showSec('grades', this)">🧾 Grades</button>
+        <button class="navBtn" data-sec="attendance" onclick="showSec('attendance', this)">📌 Attendance</button>
+        <button class="navBtn" data-sec="users" onclick="showSec('users', this)">👥 Manage Users</button>
+        <button class="navBtn" data-sec="public" onclick="showSec('public', this)">📚 Public Courses</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="who" id="meLine">Loading...</div>
+        <div class="hint">Full System Access</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>All functions in one place (RBAC + Stored Procedures).</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-secondary" href="/info">My Info</a>
+          <button class="btn btn-secondary" onclick="refreshAll()">Refresh</button>
+          <button class="btn btn-primary" id="logoutBtn" onclick="logout()">Logout</button>
+        </div>
+      </header>
+
+      <div style="padding: 0 30px;">
+        <div class="msg" id="dashMsg"></div>
+      </div>
+
+      <div class="grid">
+        <div class="span-4">
+          <div class="stat green">
+            <div class="label">Total Users</div>
+            <div class="value" id="statUsers">-</div>
+          </div>
+        </div>
+        <div class="span-4">
+          <div class="stat orange">
+            <div class="label">Pending Requests</div>
+            <div class="value" id="statReq">-</div>
+          </div>
+        </div>
+        <div class="span-4">
+          <div class="stat blue">
+            <div class="label">Grades Records</div>
+            <div class="value" id="statGrades">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0 30px 30px 30px;">
+
+        <section id="sec-overview" class="section">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Functions Coverage</h2>
+                <p>Status of implemented Admin capabilities.</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Function / Data</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>View own profile</td><td></td></tr>
+                    <tr><td>Edit own profile</td><td></td></tr>
+                    <tr><td>View grades</td><td></td></tr>
+                    <tr><td>Edit grades</td><td></td></tr>
+                    <tr><td>View attendance</td><td></td></tr>
+                    <tr><td>Edit attendance</td><td></td></tr>
+                    <tr><td>Manage users</td><td></td></tr>
+                    <tr><td>View public course info</td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="msg" style="color:#666; background:none; border:none; margin-top:15px;">
+                Note: “Manage users” includes listing users + approving/denying role requests.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-profile" class="section hidden">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>My Profile</h2>
+                <p>View & edit your admin profile.</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Full Name</label>
+                  <input class="input" id="myFullName" placeholder="Full name">
+                </div>
+                <div class="field">
+                  <label>Email</label>
+                  <input class="input" id="myEmail" placeholder="Email">
+                </div>
+                <div class="field">
+                  <label>Role</label>
+                  <input class="input" id="myRole" disabled>
+                </div>
+                <div class="field full">
+                  <button class="btn btn-primary" onclick="saveMyProfile()">Save Changes</button>
+                  <div class="msg" id="profileMsg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-grades" class="section hidden secretPanel" data-class="Secret">
+          
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Insert Grade</h2>
+                <p>Write control (Secret)</p>
+              </div>
+              <button class="btn btn-secondary" onclick="loadGrades()">Reload</button>
+            </div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Student ID</label>
+                  <input class="input" id="gStudent" type="number" placeholder="e.g. 1">
+                </div>
+                <div class="field">
+                  <label>Course ID</label>
+                  <input class="input" id="gCourse" type="number" placeholder="e.g. 1">
+                </div>
+                <div class="field">
+                  <label>Grade</label>
+                  <input class="input" id="gValue" type="number" step="0.01" placeholder="e.g. 88.5">
+                </div>
+                <div class="field full">
+                  <button class="btn btn-primary" onclick="insertGrade()">Insert</button>
+                  <div class="msg" id="gradeInsertMsg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Publish / Unpublish</h2>
+                <p>Disclosure control</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Grade ID</label>
+                  <input class="input" id="pubGradeId" type="number" placeholder="e.g. 10">
+                </div>
+                <div class="field">
+                  <label>Publish?</label>
+                  <select class="input" id="pubFlag"> <option value="true">Publish</option>
+                    <option value="false">Unpublish</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <button class="btn btn-dark" onclick="publishGrade()">Apply</button>
+                </div>
+                <div class="field full">
+                   <div class="msg" id="gradePublishMsg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Grades Records</h2>
+                <p>Blocked: Copy/Print/Save (Best effort)</p>
+              </div>
+              <div class="tools">
+                <input class="input" id="gradesSearch" placeholder="Search..." oninput="filterTable('gradesTable', this.value)" style="min-width: 200px;">
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-wrap">
+                <table id="gradesTable">
+                  <thead>
+                    <tr>
+                      <th>GradeID</th>
+                      <th>StudentID</th>
+                      <th>CourseID</th>
+                      <th>Grade</th>
+                      <th>Published</th>
+                      <th>DateEntered</th>
+                      <th>PublishedDate</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-attendance" class="section hidden secretPanel" data-class="Secret">
+          
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Record Attendance</h2>
+                <p>Write control (Secret)</p>
+              </div>
+              <button class="btn btn-secondary" onclick="loadAttendance()">Reload</button>
+            </div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Student ID</label>
+                  <input class="input" id="aStudent" type="number" placeholder="e.g. 1">
+                </div>
+                <div class="field">
+                  <label>Course ID</label>
+                  <input class="input" id="aCourse" type="number" placeholder="e.g. 1">
+                </div>
+                <div class="field">
+                  <label>Status</label>
+                  <select class="input" id="aStatus">
+                    <option value="true">Present</option>
+                    <option value="false">Absent</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <button class="btn btn-primary" onclick="recordAttendance()">Record</button>
+                  <div class="msg" id="attMsg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Attendance Records</h2>
+                <p>Blocked: Copy/Print/Save (Best effort)</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-grid" style="margin-bottom: 20px; align-items: flex-end;">
+                <div class="field">
+                  <label>Filter Student</label>
+                  <input class="input" id="attFilterStudent" placeholder="StudentID">
+                </div>
+                <div class="field">
+                  <label>Filter Course</label>
+                  <input class="input" id="attFilterCourse" placeholder="CourseID">
+                </div>
+                <div class="field">
+                  <button class="btn btn-dark" onclick="loadAttendance()">Apply Filter</button>
+                </div>
+                 <div class="field">
+                   <label>Search Table</label>
+                   <input class="input" id="attSearch" placeholder="Search..." oninput="filterTable('attTable', this.value)">
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table id="attTable">
+                  <thead>
+                    <tr>
+                      <th>AttendanceID</th>
+                      <th>StudentID</th>
+                      <th>CourseID</th>
+                      <th>Status</th>
+                      <th>DateRecorded</th>
+                      <th>RecordedByUserID</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-users" class="section hidden">
+          
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>System Users</h2>
+                <p>List of all users in the system.</p>
+              </div>
+              <div class="tools">
+                <button class="btn btn-secondary" onclick="loadUsers()">Reload</button>
+                <input class="input" id="usersSearch" placeholder="Search..." oninput="filterTable('usersTable', this.value)" style="min-width: 150px;">
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-wrap">
+                <table id="usersTable">
+                  <thead>
+                    <tr>
+                      <th>UserID</th>
+                      <th>Role</th>
+                      <th>Clearance</th>
+                      <th>StudentID</th>
+                      <th>InstructorID</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Pending Role Requests</h2>
+                <p>Approve or deny upgrades.</p>
+              </div>
+              <button class="btn btn-secondary" onclick="loadRequests()">Reload Requests</button>
+            </div>
+            <div class="card-body">
+              <div class="table-wrap">
+                <table id="requestsTable">
+                  <thead>
+                    <tr>
+                      <th>RequestID</th>
+                      <th>UserID</th>
+                      <th>Current</th>
+                      <th>Requested</th>
+                      <th>Reason</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-public" class="section hidden">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Public Course Info</h2>
+                <p>Unclassified information accessible to everyone.</p>
+              </div>
+              <div class="tools">
+                 <button class="btn btn-secondary" onclick="loadPublicCourses()">Reload</button>
+                 <input class="input" id="pubSearch" placeholder="Search..." oninput="filterTable('publicTable', this.value)" style="min-width: 200px;">
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-wrap">
+                <table id="publicTable">
+                  <thead>
+                    <tr>
+                      <th>CourseID</th>
+                      <th>CourseName</th>
+                      <th>PublicInfo</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

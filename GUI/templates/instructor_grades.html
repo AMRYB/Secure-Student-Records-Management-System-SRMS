@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Instructor Grades - SRMS</title>
+      <link rel="icon" href="/static/img/11.png" type="image/png" />
+      <link rel="stylesheet" href="/static/css/in.css" /></head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div><div class="title">SRMS</div><div class="sub">Instructor Portal</div></div>
+      </div>
+      <nav class="nav">
+        <a href="/instructor">Dashboard</a>
+        <a class="active" href="/instructor/grades">Grades</a>
+        <a href="/instructor/attendance">Attendance</a>
+        <a href="/instructor/student-profile">Student Profile</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="who">Grades</div>
+        <div class="hint">Insert & publish</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Grades</h1>
+          <p>Insert grades and publish/unpublish results.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>Insert Grade</h2>
+              <p>StudentID + CourseID + Grade</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Student ID</label>
+                <input class="input" id="studentId" type="number" min="1" placeholder="e.g. 1">
+              </div>
+              <div class="field">
+                <label>Course ID</label>
+                <input class="input" id="courseId" type="number" min="1" placeholder="e.g. 1">
+              </div>
+              <div class="field">
+                <label>Grade</label>
+                <input class="input" id="grade" type="number" step="0.01" min="0" max="100" placeholder="e.g. 88.5">
+              </div>
+              <div class="field full">
+                <button class="btn btn-primary" id="insertBtn">Insert</button>
+                <div class="msg" id="insertMsg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>All Grades</h2>
+              <p>View & publish/unpublish using GradeID</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Grade ID</label>
+                <input class="input" id="gradeId" type="number" min="1" placeholder="e.g. 1">
+              </div>
+              <div class="field">
+                <label>Publish</label>
+                <select class="select" id="publish">
+                  <option value="true">Publish</option>
+                  <option value="false">Unpublish</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>&nbsp;</label>
+                <button class="btn btn-dark" id="publishBtn">Apply</button>
+              </div>
+              <div class="field full">
+                <div class="msg" id="pubMsg"></div>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>GradeID</th>
+                    <th>StudentID</th>
+                    <th>CourseID</th>
+                    <th>Grade</th>
+                    <th>Published</th>
+                    <th>Entered</th>
+                    <th>PublishedDate</th>
+                  </tr>
+                </thead>
+                <tbody id="gradesBody"></tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/instructor_common.js"></script>
+  <script src="/static/js/instructor_grades.js"></script>
+</body>
+</html>

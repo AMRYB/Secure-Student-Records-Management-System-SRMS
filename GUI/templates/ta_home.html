@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>TA Dashboard</title>
+  <link rel="stylesheet" href="/static/css/ta.css">
+</head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div>
+          <div class="title">SRMS</div>
+          <div class="sub">TA Portal</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="/ta">Dashboard</a>
+        <a href="/ta/attendance">Attendance</a>
+        <a href="/ta/student-profile">Student Profile</a>
+        <a href="/ta/role-request">Role Request</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="who">Logged in as TA</div>
+        <div class="hint">Record attendance securely</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>TA Dashboard</h1>
+          <p>Manage attendance for assigned courses only.</p>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-4">
+          <div class="stat green">
+            <div class="label">Role</div>
+            <div class="value">TA</div>
+          </div>
+        </div>
+        <div class="span-4">
+          <div class="stat blue">
+            <div class="label">Clearance</div>
+            <div class="value">2</div>
+          </div>
+        </div>
+        <div class="span-4">
+          <div class="stat orange">
+            <div class="label">Quick</div>
+            <div class="value">Actions</div>
+          </div>
+        </div>
+
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>Quick Actions</h2>
+              <p>Navigate to TA features</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="grid">
+              <div class="span-4">
+                <a class="btn btn-dark" href="/ta/attendance">Open Attendance</a>
+              </div>
+              <div class="span-4">
+                <a class="btn btn-dark" href="/ta/student-profile">Find Student</a>
+              </div>
+              <div class="span-4">
+                <a class="btn btn-dark" href="/ta/role-request">Request Upgrade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/ta_common.js"></script>
+</body>
+</html>

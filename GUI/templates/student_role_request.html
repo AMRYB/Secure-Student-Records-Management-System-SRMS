@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <title>Request Role Upgrade</title>
+      <link rel="icon" href="/static/img/11.png" type="image/png" />
+      <link rel="stylesheet" href="/static/css/student.css" />
+   </head>
+   <body class="srms-ui">
+
+      <div class="page">
+         <h2>Request Role Upgrade</h2>
+         <div id="msg"></div>
+         <label>Requested Role</label>
+         <select id="requestedRole">
+            <option value="TA">TA</option>
+            <option value="Instructor">Instructor</option>
+            <option value="Admin">Admin</option>
+         </select>
+         <label>Reason</label>
+         <textarea id="reason" rows="4" placeholder="Write your reason..."></textarea>
+         <button id="sendBtn">Submit Request</button>
+         <a href="/student">Back</a>
+      </div>
+      <script src="/static/js/student_role_request.js"></script>
+   </body>
+</html>

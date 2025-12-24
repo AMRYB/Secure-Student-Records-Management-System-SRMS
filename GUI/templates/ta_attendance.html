@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Attendance</title>
+  <link rel="stylesheet" href="/static/css/ta.css">
+</head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div><div class="title">SRMS</div><div class="sub">TA Portal</div></div>
+      </div>
+      <nav class="nav">
+        <a href="/ta">Dashboard</a>
+        <a class="active" href="/ta/attendance">Attendance</a>
+        <a href="/ta/student-profile">Student Profile</a>
+        <a href="/ta/role-request">Role Request</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="who">TA Attendance</div>
+        <div class="hint">Assigned courses only</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Attendance</h1>
+          <p>Record and view attendance (restricted by SP).</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>Record Attendance</h2>
+              <p>Enter StudentID, CourseID, and status.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Student ID</label>
+                <input class="input" id="studentId" type="number" min="1" placeholder="e.g. 1">
+              </div>
+
+              <div class="field">
+                <label>Course ID</label>
+                <input class="input" id="courseId" type="number" min="1" placeholder="e.g. 1">
+              </div>
+
+              <div class="field">
+                <label>Status</label>
+                <select class="select" id="status">
+                  <option value="true">Present</option>
+                  <option value="false">Absent</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <button class="btn btn-primary" id="recordBtn">Record</button>
+                <div class="msg" id="recordMsg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>View Attendance</h2>
+              <p>Optional filters: StudentID / CourseID</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Filter Student ID</label>
+                <input class="input" id="filterStudentId" type="number" min="1" placeholder="optional">
+              </div>
+              <div class="field">
+                <label>Filter Course ID</label>
+                <input class="input" id="filterCourseId" type="number" min="1" placeholder="optional">
+              </div>
+              <div class="field">
+                <label>&nbsp;</label>
+                <button class="btn btn-dark" id="loadBtn">Load</button>
+              </div>
+              <div class="field full">
+                <div class="msg" id="loadMsg"></div>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>AttendanceID</th>
+                    <th>StudentID</th>
+                    <th>CourseID</th>
+                    <th>Status</th>
+                    <th>DateRecorded</th>
+                  </tr>
+                </thead>
+                <tbody id="attBody"></tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/ta_common.js"></script>
+  <script src="/static/js/ta_attendance.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Role Request</title>
+  <link rel="stylesheet" href="/static/css/ta.css">
+</head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div><div class="title">SRMS</div><div class="sub">TA Portal</div></div>
+      </div>
+      <nav class="nav">
+        <a href="/ta">Dashboard</a>
+        <a href="/ta/attendance">Attendance</a>
+        <a href="/ta/student-profile">Student Profile</a>
+        <a class="active" href="/ta/role-request">Role Request</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="who">Role Upgrade</div>
+        <div class="hint">Send request to Admin</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Request Role Upgrade</h1>
+          <p>Submit upgrade request to Admin.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>New Role</h2>
+              <p>TA can request Instructor/Admin (you can change).</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Requested Role</label>
+                <select class="select" id="requestedRole">
+                  <option value="Instructor">Instructor</option>
+                  <option value="Admin">Admin</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label>Reason</label>
+                <textarea class="textarea" id="reason" placeholder="Write your reason..."></textarea>
+              </div>
+
+              <div class="field full">
+                <button class="btn btn-primary" id="sendBtn">Submit</button>
+                <div class="msg" id="msg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/static/js/ta_common.js"></script>
+  <script src="/static/js/ta_role_request.js"></script>
+</body>
+</html>

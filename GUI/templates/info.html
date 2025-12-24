@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>My Info</title>
+  <link rel="stylesheet" href="/static/css/info.css">
+</head>
+
+<body class="srms-ui">
+  <div class="pageShell">
+    <header class="topbarSimple">
+      <div>
+        <h1>My Account Info</h1>
+        <p id="whoLine">Loading...</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+        <button class="btn btn-primary" id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>Profile</h2>
+          <p>Update your information (if your role allows).</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="msg" id="msg"></div>
+
+        <form id="infoForm" class="formGrid2">
+          <div>
+            <label>Full Name</label>
+            <input class="input" id="fullName" placeholder="Full name">
+          </div>
+
+          <div>
+            <label>Email</label>
+            <input class="input" id="email" placeholder="email@example.com">
+          </div>
+
+          <div>
+            <label>DOB (Student only)</label>
+            <input class="input" id="dob" type="date">
+          </div>
+
+          <div>
+            <label>Department (Student only)</label>
+            <input class="input" id="dept" placeholder="CS / IS ...">
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-secondary" type="button" id="reloadBtn">Reload</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/js/info.js"></script>
+</body>
+</html>

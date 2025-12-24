@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Student Profile</title>
+  <link rel="stylesheet" href="/static/css/ta.css">
+</head>
+<body class="srms-ui">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="SRMS">
+        <div><div class="title">SRMS</div><div class="sub">TA Portal</div></div>
+      </div>
+      <nav class="nav">
+        <a href="/ta">Dashboard</a>
+        <a href="/ta/attendance">Attendance</a>
+        <a class="active" href="/ta/student-profile">Student Profile</a>
+        <a href="/ta/role-request">Role Request</a>
+        <a href="/guest">Public Courses</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="who">Student Profile</div>
+        <div class="hint">Only in your courses</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Student Profile</h1>
+          <p>Search by StudentID (SP checks access).</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" onclick="history.back()">Back</button>
+          <button class="btn btn-primary" id="logoutBtn">Logout</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="span-12 card">
+          <div class="card-head">
+            <div>
+              <h2>Find Student</h2>
+              <p>Enter StudentID to view profile.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Student ID</label>
+                <input class="input" id="sid" type="number" min="1" placeholder="e.g. 1">
+              </div>
+              <div class="field">
+                <label>&nbsp;</label>
+                <button class="btn btn-dark" id="searchBtn">Search</button>
+              </div>
+              <div class="field full">
+                <div class="msg" id="msg"></div>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,.10);">
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field"><label>StudentID</label><div id="outId">-</div></div>
+                  <div class="field"><label>Full Name</label><div id="outName">-</div></div>
+                  <div class="field"><label>Email</label><div id="outEmail">-</div></div>
+                  <div class="field"><label>DOB</label><div id="outDob">-</div></div>
+                  <div class="field"><label>Department</label><div id="outDept">-</div></div>
+                  <div class="field"><label>Clearance</label><div id="outCl">-</div></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/ta_common.js"></script>
+  <script src="/static/js/ta_student_profile.js"></script>
+</body>
+</html>
